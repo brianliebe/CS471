@@ -1,0 +1,38 @@
+BRIAN LIEBE
+CS471 Assignment 1
+
+1.
+int a1; b2; // error
+  - lexical, since the lexer wouldn't be able to split "b2" into tokens
+int arr[10]  //error
+  - syntactical, since the ";" is missing, which is caught by the parser
+long f#r, nx; //error
+  - lexical, since the lexer can't determine what "f#r" means
+int do ;  //error
+  - syntactical, since "do" is invalid as a variable name
+arr[1] = x;  //error
+  - static semantic, since "x" is undefined
+do = chg(a); //error
+  - static semantic, since "a" is the wrong type, and would be caught by the analyzer
+return do; //error
+  - syntactical, since again "do" is invalid as a name
+if (fr = 0) {  //error
+  - logical, since this is valid but not logically correct
+x = 10; //error 
+  - static semantic, since x is not defined
+arr[a] = 10; //error
+  - uncheckable, since the value of "a" is out-of-bounds
+arr[1] = 1; //error
+  - syntactical, since there's a missing "}"
+
+2.
+
+3.
+
+4.
+
+5.
+
+6.
+
+7.
