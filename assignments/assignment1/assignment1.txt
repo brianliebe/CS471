@@ -3,7 +3,7 @@ CS471 Assignment 1
 
 1.
 int a1; b2; // error
-  - lexical, since the lexer wouldn't be able to split "b2" into tokens
+  - syntactical, since "b2" must be paired with a type
 int arr[10]  //error
   - syntactical, since the ";" is missing, which is caught by the parser
 long f#r, nx; //error
@@ -13,7 +13,8 @@ int do ;  //error
 arr[1] = x;  //error
   - static semantic, since "x" is undefined
 do = chg(a); //error
-  - static semantic, since "a" is the wrong type, and would be caught by the analyzer
+  - if we consider "do" a valid variable, static semantic, since "a" is the wrong type, and would be caught by the analyzer
+  - if not, syntactical, since "do" requires an expression following it
 return do; //error
   - syntactical, since again "do" is invalid as a name
 if (fr = 0) {  //error
@@ -26,8 +27,54 @@ arr[1] = 1; //error
   - syntactical, since there's a missing "}"
 
 2.
+        .file   "powI.c"
+        .text
+        .globl  powI
+        .type   powI, @function
+powI:
+.LFB0:
+        .cfi_startproc
+        pushq   %rbp            // part of the stack frame creation
+        .cfi_def_cfa_offset 16
+        .cfi_offset 6, -16
+        movq    %rsp, %rbp      // second part of stack frame creation
+        .cfi_def_cfa_register 6
+        movl    %edi, -20(%rbp) // store the args
+        movl    %esi, -24(%rbp)
+        movl    $1, -4(%rbp)    // store the local data
+        movl    $0, -8(%rbp)
+        jmp     .L2
+.L3:
+        movl    -4(%rbp), %eax  
+        imull   -24(%rbp), %eax
+        movl    %eax, -4(%rbp)
+        addl    $1, -8(%rbp)
+.L2:
+        movl    -8(%rbp), %eax  // moves current value to eax
+        cmpl    -20(%rbp), %eax // compare eax to see if it's finished
+        jl      .L3             // jump to L3 if we're not done
+        movl    -4(%rbp), %eax  // set the return value
+        popq    %rbp            // fix the stack
+        .cfi_def_cfa 7, 8
+        ret                     // return the value
+        .cfi_endproc
+.LFE0:
+        .size   powI, .-powI
+        .ident  "GCC: (Debian 6.3.0-18+deb9u1) 6.3.0 20170516"
+        .section        .note.GNU-stack,"",@progbits
 
 3.
+int powF(int pow, int base) {
+  if (pow == 1) {
+    return base;
+  } else {
+    return base * powF(pow - 1, base);
+  }
+}
+This would be O(n), since it will just multiply the base pow-number of times
+Depending on the language, one method might be faster, so you'd pick that. Otherwise, maybe
+one is more readable or simpler to implement, so you might choose that. Depending on the
+compiler, you might get better results too.
 
 4.
 
@@ -36,3 +83,4 @@ arr[1] = 1; //error
 6.
 
 7.
+
