@@ -1,14 +1,24 @@
 #!/usr/bin/env python
 import sys
 
-def powI(pow, base):
-  acc = 1
-  for p in range(pow):
-    acc = acc * base
-  return acc
+def powI(base, power):
+  total = 1
+  if base:
+    for p in range(power):
+      total = total * base
+  return total
 
-def powF(pow, base):
-  acc = 1
+def powF(base, power):
+  if power == 0:
+    return 1
+  else:
+    if power == 1:
+      return base
+    else:
+      return base * powF(base, power - 1);
 
-print(powI(sys.argv[1], sys.argv[2]));
-print(powF(sys.argv[1], sys.argv[2]));
+
+argv_power = int(sys.argv[2])
+argv_base = int(sys.argv[1])
+print(powI(argv_base, argv_power))
+print(powF(argv_base, argv_power))

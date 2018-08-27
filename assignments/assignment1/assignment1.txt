@@ -2,29 +2,29 @@ BRIAN LIEBE
 CS471 Assignment 1
 
 1.
-int a1; b2; // error
-  - syntactical, since "b2" must be paired with a type
-int arr[10]  //error
-  - syntactical, since the ";" is missing, which is caught by the parser
-long f#r, nx; //error
-  - lexical, since the lexer can't determine what "f#r" means
-int do ;  //error
-  - syntactical, since "do" is invalid as a variable name
-arr[1] = x;  //error
-  - static semantic, since "x" is undefined
-do = chg(a); //error
-  - if we consider "do" a valid variable, static semantic, since "a" is the wrong type, and would be caught by the analyzer
-  - if not, syntactical, since "do" requires an expression following it
-return do; //error
-  - syntactical, since again "do" is invalid as a name
-if (fr = 0) {  //error
-  - logical, since this is valid but not logically correct
-x = 10; //error 
-  - static semantic, since x is not defined
-arr[a] = 10; //error
-  - uncheckable, since the value of "a" is out-of-bounds
-arr[1] = 1; //error
-  - syntactical, since there's a missing "}"
+  int a1; b2; // error
+    - syntactical, since "b2" must be paired with a type
+  int arr[10]  //error
+    - syntactical, since the ";" is missing, which is caught by the parser
+  long f#r, nx; //error
+    - lexical, since the lexer can't determine what "f#r" means
+  int do ;  //error
+    - syntactical, since "do" is invalid as a variable name
+  arr[1] = x;  //error
+    - static semantic, since "x" is undefined
+  do = chg(a); //error
+    - if we consider "do" a valid variable, static semantic, since "a" is the wrong type, and would be caught by the analyzer
+    - if not, syntactical, since "do" requires an expression following it
+  return do; //error
+    - syntactical, since again "do" is invalid as a name
+  if (fr = 0) {  //error
+    - logical, since this is valid but not logically correct
+  x = 10; //error 
+    - static semantic, since x is not defined
+  arr[a] = 10; //error
+    - uncheckable, since the value of "a" is out-of-bounds
+  arr[1] = 1; //error
+    - syntactical, since there's a missing "}"
 
 2.
         .file   "powI.c"
@@ -64,23 +64,34 @@ powI:
         .section        .note.GNU-stack,"",@progbits
 
 3.
-int powF(int pow, int base) {
-  if (pow == 1) {
-    return base;
-  } else {
-    return base * powF(pow - 1, base);
-  }
-}
-This would be O(n), since it will just multiply the base pow-number of times
-Depending on the language, one method might be faster, so you'd pick that. Otherwise, maybe
-one is more readable or simpler to implement, so you might choose that. Depending on the
-compiler, you might get better results too.
+  I put this in pow_full.c
+
+  This would be O(n), since it will just multiply the base pow-number of times
+  Depending on the language, one method might be faster, so you'd pick that. Otherwise, maybe
+  one is more readable or simpler to implement, so you might choose that. Depending on the
+  compiler, you might get better results too.
 
 4.
+  I put this in pow_full.py
 
 5.
+  a. int this-thing = 2;
+  b. int a = b * (a;
+  c. int number = "or is it?";
+  d. int array[1];
+     array[10] = 123; // in Java
+  e. int array[1];
+     array[10] = 123; // in C
 
 6.
+  True, but it's highly subjective. Some languages, especially older ones that aren't as well maintained
+  anymore are definitely worse at modern problem-solving than some newer languages. But depending on what
+  you're looking for in a language (speed, libraries, ease-of-coding) maybe you'll value one over another.
+  For example, you'll probably never use C++ for front-end web programming, but you'd definitely use a 
+  language like javascript for that sort of thing. But C++ is used more for linux-y stuff.
 
 7.
-
+  a. 2
+  b. 4
+  c. With ack(0,3) I get 4, and with ack(3,20) I get an infinite loop. 
+  d. With ack(0,3) I get 4, and with ack(3,20) I get a lot of errors, and eventually: RuntimeError: maximum recursion depth exceeded.

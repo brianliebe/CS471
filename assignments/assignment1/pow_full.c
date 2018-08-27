@@ -10,6 +10,7 @@ int powI(int pow, int base) {
 }
 
 int powF(int pow, int base) {
+  if (pow == 0) return 1;
   if (pow == 1) {
     return base;
   } else {
