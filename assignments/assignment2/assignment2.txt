@@ -1,0 +1,206 @@
+BRIAN LIEBE
+CS471 Assignment 2
+
+1.
+  1. 
+    <command> := <expr> '\n'
+    <expr>    := <term> '+' <expr> | <term>
+    <term>    := <factor> '*' <term> | <factor>
+    <factor>  := '(' <expr> ')' | <number>
+    <number>  := <digit> | <number><digit>
+    <digit>   := 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+  2.
+    Right recursive, and it affects it by not following the order of operations that
+    we're used to. However, + and * are associative, so we really wouldn't see any issues
+    without - or /.
+
+2. 
+    <command> := <expr> '\n'
+    <expr>    := <minus> '+' <expr> | <minus>
+    <minus>   := <term> '-' <minus> | <term>
+    <term>    := <factor> '*' <term> | <factor>
+    <factor>  := '(' <expr> ')' | <number>
+    <number>  := <digit> | <number><digit>
+    <digit>   := 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+
+3.
+  a.
+    <command>
+    <expr>
+    <minus> + <expr>
+    <term> + <expr>
+    <factor> + <expr>
+    <number> + <expr>
+    <digit> + <expr>
+    1 + <expr>
+    1 + <minus>
+    1 + <term> - <minus>
+    1 + <factor> - <minus>
+    1 + <number> - <minus>
+    1 + <digit> - <minus>
+    1 + 2 - <minus>
+    1 + 2 - <term>
+    1 + 2 - <factor>
+    1 + 2 - <number>
+    1 + 2 - <digit>
+    1 + 2 - 2
+  b. 
+    <command>
+    <expr>
+    <minus>
+    <term> - <minus>
+    <factor> - <minus>
+    <number> - <minus>
+    <digit> - <minus>
+    2 - <minus>
+    2 - <term>
+    2 - <factor> * <term>
+    2 - <number> * <term>
+    2 - <digit> * <term>
+    2 - 3 * <term>
+    2 - 3 * <number>
+    2 - 3 * <digit>
+    2 - 3 * 5
+  c.
+    <command>
+    <expr>
+    <minus> + <expr>
+    <term> - <minus> + <expr>
+    <factor> - <minus> + <expr>
+    <number> - <minus> + <expr>
+    <number><digit> - <minus> + <expr>
+    <digit><digit> - <minus> + <expr>
+    1<digit> - <minus> + <expr>
+    10 - <minus> + <expr>
+    10 - <term> + <expr>
+    10 - <factor> + <expr>
+    10 - <number> + <expr>
+    10 - <digit> + <expr>
+    10 - 5 + <expr>
+    10 - 5 + <minus>
+    10 - 5 + <term> - <minus>
+    10 - 5 + <factor> - <minus>
+    10 - 5 + <number> - <minus>
+    10 - 5 + <digit> - <minus>
+    10 - 5 + 2 - <minus>
+    10 - 5 + 2 - <term>
+    10 - 5 + 2 - <factor>
+    10 - 5 + 2 - <number>
+    10 - 5 + 2 - <digit>
+    10 - 5 + 2 - 3
+  d.
+    <command>
+    <expr>
+    <minus>
+    <term> - <minus>
+    <factor> - <minus>
+    <number> - <minus>
+    <number><digit> - <minus>
+    <digit><digit> - <minus>
+    1<digit> - <minus>
+    10 - <minus>
+    10 - <term> - <minus>
+    10 - <factor> - <minus>
+    10 - <number> - <minus>
+    10 - <digit> - <minus>
+    10 - 7 - <minus>
+    10 - 7 - <term>
+    10 - 7 - <factor>
+    10 - 7 - <number>
+    10 - 7 - <digit>
+    10 - 7 - 2
+
+4.
+    Changes are made in arith1.c
+
+5.
+  1.
+    <command> := <expr>
+    <expr>    := <term> { + <term> }
+    <term>    := <factor> { * <factor> }
+    <factor>  := '(' <expr> ')' | <number>
+    <number>  := <digit> { <digit> }
+    <digit>   := 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+  2. It is right recursive, but since + and * are associative, we wouldn't really see
+     any issues until - and / are added.
+
+6. 
+    <command> := <expr>
+    <expr>    := <minus> { + <minus> }
+    <minus>   := <term> { - <term> }
+    <term>    := <factor> { * <factor> }
+    <factor>  := '(' <expr> ')' | <number>
+    <number>  := <digit> { <digit> }
+    <digit>   := 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+
+7.
+  a.
+    <command>
+    <expr>
+    <minus> { + <minus> }
+    <term> { + <minus> }
+    <factor> { + <minus> }
+    <number> { + <minus> }
+    1 { + <minus> }
+    1 + <minus>
+    1 + <term> { - <term> }
+    1 + <factor> { - <term> }
+    1 + <number> { - <term> }
+    1 + <number> - <term>
+    1 + 2 - <term>
+    1 + 2 - <factor>
+    1 + 2 - <number>
+    1 + 2 - 2
+  b. 
+    <command>
+    <expr>
+    <minus>
+    <term> { - <term> }
+    <factor> { - <term> }
+    <number> { - <term> }
+    2 { - <term> }
+    2 - <term>
+    2 - <factor> { * <factor> }
+    2 - <number> { * <factor> }
+    2 - 3 { * <factor> }
+    2 - 3 * <factor>
+    2 - 3 * <number>
+    2 - 3 * 5
+  c.
+    <command>
+    <expr>
+    <minus> { + <minus> }
+    <term> { - <term> } { + <minus> }
+    <factor> { - <term> } { + <minus> }
+    <number> { - <term> } { + <minus> }
+    10 { - <term> } { + <minus> }
+    10 - <term> { + <minus> }
+    10 - <factor> { + <minus> }
+    10 - <number> { + <minus> }
+    10 - 5 { + <minus> }
+    10 - 5 + <minus> 
+    10 - 5 + <term> { - <term> }
+    10 - 5 + <factor> { - <term> }
+    10 - 5 + <number> { - <term> }
+    10 - 5 + 2 { - <term> }
+    10 - 5 + 2 - <term>
+    10 - 5 + 2 - <factor> 
+    10 - 5 + 2 - <number>
+    10 - 5 + 2 - 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
