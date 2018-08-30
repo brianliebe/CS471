@@ -187,20 +187,69 @@ CS471 Assignment 2
     10 - 5 + 2 - <factor> 
     10 - 5 + 2 - <number>
     10 - 5 + 2 - 2
+  d. 
+    <command>
+    <expr>
+    <minus>
+    <term> { - <term> }
+    <factor> { - <term> }
+    <number> { - <term> }
+    10 { - <term> }
+    10 - <term> { - <term> }
+    10 - <factor> { - <term> }
+    10 - <number> { - <term> }
+    10 - 7 { - <term> }
+    10 - 7 - <term>
+    10 - 7 - <factor>
+    10 - 7 - <number>
+    10 - 7 - 2
 
+8.
+    Changes are in arith2.c
 
+9.
+  1.
+    [a-zA-Z_][a-zA-Z0-9_]*
+  2.
+    ("([^"]|(\\"))*[^\\]")|("")
+  3.
+    ((a*ba*ba*)+)|(a*)
+  4.
+    [ab]*c[ab]*([ab]*c[ab]*c[ab]*)*
 
+10.
+  1.
+    They're both used as booleans, bool is just an alias
+  2.
+    bool wasn't reserved at one time, but _Bool was, so bool is just an alias
+  3.
+    They're the same, but bool requires a library, so probably _Bool is easier
 
+11.
+    Pragmas tell a compiler/translator how to read its input. It's done by the scanner
+    because it must be run prior to the compiler (since it's telling the compiler what
+    to do). Using pragmas are good if you want all compilers to follow the same format
+    to avoid issues, but it could also hurt performance of those compilers.
 
+12.
+  a.
+    + @ z w @ x y
+  b.
+    + w + x * y z
+  c.
+    / * w x @ y z
+  d.
+    * / / w x y z
 
-
-
-
-
-
-
-
-
+13.
+  a.
+    z w @ x y @ +
+  b.
+    w x z y * + +
+  c.
+    w x * y z @ / 
+  d.
+    w x / y / z *
 
 
 
