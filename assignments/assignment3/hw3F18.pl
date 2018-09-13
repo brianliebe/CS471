@@ -1,7 +1,10 @@
-/* Homework Assignment 3
+/* 
+   BRIAN LIEBE
+   CS471 Assignment 3
    Programming Languages
    CS471, Fall 2018
-   Binghamton University */
+   Binghamton University
+*/
 
 /* Instructions */
 
@@ -240,18 +243,22 @@ some_rule([X,Y|Xs]) :-
 
 /* Problem 4 Answer: */
 
-/* Problem 4 Test: */
-%:- is_increasing([]).              % SUCCEED
-%:- is_increasing([10]).            % SUCCEED
-%:- is_increasing([10,100]).        % SUCCEED
-%:- is_increasing([10,11,12]).      % SUCCEED
-%:- is_increasing([1,8,8,17,20]).   % SUCCEED
-%:- is_increasing([1,1,1,1,1]).     % SUCCEED
+is_increasing([]).
+is_increasing([_]).
+is_increasing([X,Y|T]) :- X =< Y, is_increasing([Y|T]).
 
-%:- is_increasing([10,19,17,9]) -> fail ; true.    % FAIL
-%:- is_increasing([2,3,1]) -> fail ; true.       % FAIL
-%:- is_increasing([3,2,1]) -> fail ; true.       % FAIL
-%:- is_increasing([7,5]) -> fail ; true.        % FAIL
+/* Problem 4 Test: */
+:- is_increasing([]).              % SUCCEED
+:- is_increasing([10]).            % SUCCEED
+:- is_increasing([10,100]).        % SUCCEED
+:- is_increasing([10,11,12]).      % SUCCEED
+:- is_increasing([1,8,8,17,20]).   % SUCCEED
+:- is_increasing([1,1,1,1,1]).     % SUCCEED
+
+:- is_increasing([10,19,17,9]) -> fail ; true.    % FAIL
+:- is_increasing([2,3,1]) -> fail ; true.       % FAIL
+:- is_increasing([3,2,1]) -> fail ; true.       % FAIL
+:- is_increasing([7,5]) -> fail ; true.        % FAIL
 
 /* Problem 5:
 Write a predicate zip(Xs,Ys,Zs) that succeeds if Zs is a list where each element
@@ -264,13 +271,16 @@ zip([1],[a],Zs) should give Zs = [(1,a)] */
 
 /* Problem 5 Answer: */
 
-/* Problem 5 Test: */
-%:- zip([1,2,3],[a,b,c],[(1,a),(2,b),(3,c)]). % SUCCEED
-%:- zip([],[],[]).                      % SUCCEED
-%:- zip([1],[2],[(1,2)]).               % SUCCEED
+zip([], [], []).
+zip([X|Xs], [Y|Ys], [(X,Y)|Zs]) :- zip(Xs, Ys, Zs).
 
-%:- zip([1],[2],[(2,3)]) -> fail ; true.               % FAIL
-%:- zip([1],[2,3],[(1,2)]) -> fail ; true.             % FAIL
+/* Problem 5 Test: */
+:- zip([1,2,3],[a,b,c],[(1,a),(2,b),(3,c)]). % SUCCEED
+:- zip([],[],[]).                      % SUCCEED
+:- zip([1],[2],[(1,2)]).               % SUCCEED
+
+:- zip([1],[2],[(2,3)]) -> fail ; true.               % FAIL
+:- zip([1],[2,3],[(1,2)]) -> fail ; true.             % FAIL
 
 /* Problem 6:
 
@@ -285,12 +295,17 @@ zip2([1],[a,b],Zs) should give Zs = [(1,a)] */
 
 /* Problem 6 Answer: */
 
-/* Problem 6 Test: */
-%:- zip2([1,2,3],[a,b,c],[(1,a),(2,b),(3,c)]). % SUCCEED
-%:- zip2([],[a,b,c],[]).                  % SUCCEED
-%:- zip2([1,3],[],[]).                    % SUCCEED
-%:- zip2([1,3],[2],[(1,2)]).              % SUCCEED
+zip2([], [], []).
+zip2([X|Xs], [Y|Ys], [(X,Y)|Zs]) :- zip2(Xs, Ys, Zs).
+zip2([], _, []).
+zip2(_, [], []).
 
-%:- zip2([1],[2],[(2,3)]) -> fail ; true.                 % FAIL
-%:- zip2([1],[a,b],[(1,a),(1,b)]) -> fail ; true.         % FAIL
+/* Problem 6 Test: */
+:- zip2([1,2,3],[a,b,c],[(1,a),(2,b),(3,c)]). % SUCCEED
+:- zip2([],[a,b,c],[]).                  % SUCCEED
+:- zip2([1,3],[],[]).                    % SUCCEED
+:- zip2([1,3],[2],[(1,2)]).              % SUCCEED
+
+:- zip2([1],[2],[(2,3)]) -> fail ; true.                 % FAIL
+:- zip2([1],[a,b],[(1,a),(1,b)]) -> fail ; true.         % FAIL
 
