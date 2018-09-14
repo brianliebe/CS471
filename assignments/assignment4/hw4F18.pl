@@ -1,6 +1,6 @@
 /* 
    BRIAN LIEBE
-   Homework Assignment 4 - Prolog 2
+   CS471 Assignment 4
    Programming Languages
    CS471, Fall 2018
    Binghamton University */
@@ -62,7 +62,7 @@ my_prefix(_,[]).
 my_prefix([X|Xs], [X|Ys]) :- my_prefix(Xs,Ys).
 
 
-/* Problem 0A (NOT GRADED):
+/* Problem 0A (NOT GRADED)
 Using the preceding predicates, draw the execution trees for the following
 queries (goals). You should also enter the queries in swipl to test.
 
@@ -87,7 +87,7 @@ graphical tracer".
 
 */
 
-/* Problem 0B (NOT GRADED):
+/* Problem 0B (NOT GRADED)
    Each line is an individual Prolog query; it's a good idea type them in your
    prompt (not the file itself) to get a feel for the way Prolog works. You
    should think about whether or not each query will succeed, and if so how the
@@ -110,7 +110,7 @@ graphical tracer".
 */
 
 
-/* Problem 1:
+/* Problem 1
    A) What is the mathematical definition of:
      a) a relation?
      b) a function?
@@ -119,7 +119,8 @@ graphical tracer".
 
    (Please write your answer in a comment in the next section.)
 */
-/* Problem 1 Answer:
+
+/* Problem 1 Answer
 
    A)
      a) The relationship between two sets
@@ -149,10 +150,10 @@ graphical tracer".
 */
 
 /* Problem 3
-Write a predicate insert_at(X,Y,N,Z) that succeeds if Z is the list Y with X 
-inserted at index N -- Insert X at index N in Y.
+   Write a predicate insert_at(X,Y,N,Z) that succeeds if Z is the list Y with X 
+   inserted at index N -- Insert X at index N in Y.
 
-NOTE: Don't worry about the error cases: i.e, N greater than the length of Y.  
+   NOTE: Don't worry about the error cases: i.e, N greater than the length of Y.  
 */
 
 /* Problem 3 Answer: */
@@ -258,10 +259,10 @@ prodlist2([A|B], N, Prod) :- M is N * A, prodlist2(B, M, Prod).
    and leaf(4) we can build the binary tree
    tree(tree(leaf(1), leaf(2)), leaf(4)).
 
-Now define a predicate isBinaryTree(+BT) which succeeds if BT is a binary tree. 
-The "+" indicates that it is assumed BT is instantiated in the query.
-For example:
-If BT = tree( leaf(1), tree( leaf(2),leaf(4)) ), then isBinaryTree(BT) succeeds.
+   Now define a predicate isBinaryTree(+BT) which succeeds if BT is a binary tree. 
+   The "+" indicates that it is assumed BT is instantiated in the query.
+   For example:
+   If BT = tree( leaf(1), tree( leaf(2),leaf(4)) ), then isBinaryTree(BT) succeeds.
 */
 
 /* Problem 7 Answer: */
@@ -278,22 +279,24 @@ isBinaryTree(tree(A, B)) :- isBinaryTree(A), isBinaryTree(B).
 :- isBinaryTree( tree() )  -> fail ; true.                          % FAIL
 
 /* Problem 8
-(Exercise 3.5 from Learn Prolog Now!)
+   (Exercise 3.5 from Learn Prolog Now!)
    Problem 8 uses binary tree definition from problem 7.
    Define a predicate swap/2 , which produces the mirror image of the binary
    tree that is its first argument. For example:
 
-?- swap( tree( tree(leaf(1), leaf(2)), leaf(4)), T).
-T = tree( leaf(4), tree(leaf(2), leaf(1))).
+   ?- swap( tree( tree(leaf(1), leaf(2)), leaf(4)), T).
+   T = tree( leaf(4), tree(leaf(2), leaf(1))).
 */
 
 /* Problem 8 Answer: */
 
+swap(leaf(X), T) :- T = leaf(X).
+swap(tree(X, Y), T) :- swap(X, T1), swap(Y, T2), T = tree(T2, T1).
 
 /* Problem 8 Test: */
-% :- swap( tree( tree(leaf(1), leaf(2)), leaf(4)), T), T  =  tree( leaf(4), tree(leaf(2), leaf(1))).  %SUCCEED
-% :- swap(leaf(1), leaf(1)).  %SUCCEED
-% :- swap(tree(leaf(1), leaf(2)), tree(leaf(1), leaf(2))) -> fail ; true.  % FAIL
+:- swap( tree( tree(leaf(1), leaf(2)), leaf(4)), T), T  =  tree( leaf(4), tree(leaf(2), leaf(1))).  %SUCCEED
+:- swap(leaf(1), leaf(1)).  %SUCCEED
+:- swap(tree(leaf(1), leaf(2)), tree(leaf(1), leaf(2))) -> fail ; true.  % FAIL
 
 
 /* Problem 9:
@@ -307,10 +310,13 @@ T = tree( leaf(4), tree(leaf(2), leaf(1))).
 
 /* Problem 9 Answer: */
 
+maxV(leaf(X), X).
+maxV(tree(X, Y), Z) :- maxV(X, X1), maxV(Y, Y1), Z is max(X1, Y1).
+
 /* Problem 9 Test: */
-% :- maxV( tree( tree(leaf(1), leaf(2)), leaf(4)), M), M=4.   %SUCCEED
-% :- BT = tree(tree(leaf(2), leaf(9)), tree(leaf(3), tree(leaf(4), leaf(1))), maxV(BT, M), M=9.  %SUCCEED
-% :- BT = tree(tree(leaf(3), leaf(2)), tree(leaf(5), tree(leaf(9), leaf(1))), maxV(BT, M), M=9.  %SUCCEED
-% :- maxV(tree(leaf(1), leaf(2)), 3) -> fail ; true.  % FAIL
+:- maxV( tree( tree(leaf(1), leaf(2)), leaf(4)), M), M=4.   %SUCCEED
+:- BT = tree(tree(leaf(2), leaf(9)), tree(leaf(3), tree(leaf(4), leaf(1)))), maxV(BT, M), M=9.  %SUCCEED
+:- BT = tree(tree(leaf(3), leaf(2)), tree(leaf(5), tree(leaf(9), leaf(1)))), maxV(BT, M), M=9.  %SUCCEED
+:- maxV(tree(leaf(1), leaf(2)), 3) -> fail ; true.  % FAIL
 
 
