@@ -1,0 +1,83 @@
+James Yao, Brian Liebe, Anchu Lee
+CS 471 - HW 6
+
+1.
+C++:
+The number of built-in functions:
+    when the language is designed
+The variable declaration that corresponds to a particular variable reference:
+    when the program is compiled
+The maximum length allowed for a constant character string:
+    when the program is compiled
+The referencing environment for a subroutine that is passed as a parameter:
+    when the program is linked
+The address of a particular library routine:
+    when the program is loaded into memory
+The total amount of space occupied by program code and data:
+    when the program runs
+
+2.
+a. 
+    Activation record for powF:
+     _ _ _ _ _ _ 
+    |            |
+    |   Return   |      Pushed to the stack first, at where
+    |   Address  |      stack pointer was pointing at.
+    |_ _ _ _ _ _ |
+    |            |
+    |   'pow'    |      4 bytes down from where the return
+    |  Argument  |      address is stored.
+    |_ _ _ _ _ _ |
+    |            |
+    |   'base'   |      4 bytes down from where 'pow' argument
+    |  Argument  |      is stored. 8 bytes down from return
+    |_ _ _ _ _ _ |      address location.
+
+b.
+The stack grows toward lower addresses as shown by assembly
+instructions using negative offsets with the base pointer.
+
+c. 
+File included.
+
+3.
+The optimized code does not use the stack to do recursion. It simply uses
+the available registers.
+
+4.
+Both algorithms have pros and cons, so it's hard to say that one is specifically 
+better at minimizing external fragmentation in all cases. External fragmentation,
+in most cases, really depends on the size of the requests and the available free
+blocks. Someones "best" will be better, sometimes "first" will be better; it really
+depends on how the blocks are already allocated and what size of an allocation is 
+being attempted.
+
+5.
+The complexity of "first fit" is O(n), since it would choose the first block in the
+free block list that can hold the full allocation. This means it may have to search
+the whole list to find a good fit. An adaptation we could make would be to store the
+free block list in order of ascending size (the smallest blocks first, up to the 
+largest last). That way we could select a block to use in O(log(n)) time. All we'd 
+have to do is check N/2 entry first, then N/4 or 3N/4 etc. until we reached the 
+perfect block. 
+
+6.
+CYU 4)
+The lifetime of a binding refers to the time between its creation and unbinding.
+If two name-to-object bindings share the same name, one might not be visible
+in the scope of the other. For example, two variables can have the same name,
+but the one in the inner scope is referenced and the other is not when in that
+scope.
+
+CYU 12)
+The scope refers too the visiblity of the binding. It refers to the area where
+the binding is made to the end of the block (unless the name becomes used on
+another object).
+
+Exercise 3.4)
+Example 1: When a variable is declared and set and a function is called, the
+variable is no longer in scope, but it is still alive.
+Example 2: When a variable is static and it has been bound, it is alive, even
+after the function where the variable exists returns.
+Example 3: When a function creates an object on the heap, after the function
+returns, the variable is still alive even though it is out of scope.

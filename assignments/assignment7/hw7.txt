@@ -1,0 +1,122 @@
+James Yao, Brian Liebe, Anchu Lee
+CS 471 - HW7
+
+1.
+With static scoping the program will print:
+1 1 2 2
+As even though a new variable x is defined in the second procedure,
+it uses the global x when calling set_x.
+With dynamic scoping the program will print:
+1 1 2 1
+As the new variable x defined in th second procedure will be the one
+edited in the scope of set_x. However global x doesn't get modified
+so it still prints 1.
+
+2.
+The program will print:
+5
+7
+Variables a,b are likely to be statically allocated as its lifetime
+is the entire run of the program. Variable d is likely to be
+allocated on the stack as it is a local variable and variable c is
+likely to be allocated on the heap as it is needed for the delegate
+that b returns.
+
+3. 
+Reference counter strategy cannot account of reference cycles while
+tracing algorithm mark and sweep requires the entire system to be
+suspended during garbage collection.
+ 
+4. 
+a. 
+The program prints 21 as the y and x declarations in the first 
+and second functions are only in scope in their respective
+functions.
+b. 
+With deep binding, when the function add is passed into function
+second, x is 1, y is 3, and the x is global so the result of 
+the addition is put into global x so x is 4.
+c. 
+With shallow binding, write integer(x) just grabs the nearest x
+which is global x with x is 1.
+
+5.
+The perl diagnostics say:
+"When the inner subroutine is called, it will see the value of
+the outer subroutine's variable as it was before and during the *first*
+call to the outer subroutine; in this case, after the first call to the
+outer subroutine is complete, the inner and outer subroutines will no
+longer share a common value for the variable.  In other words, the
+variable will no longer be shared."
+This indicates to me that the inner subroutine made an object for
+itself and the variables it uses. When the first call to the subroutine
+is made, the object is created and the value is the same as the
+original variable value. However, the variable is then set to a
+different value, and when the subroutine is called again, the value
+is not reset to the outer value (the same subroutine object is used
+instead of creating a new one).
+
+6.
+When the Ruby script is run initially, you get the behavior you'd expect.
+The "bar" proc is called, prints x (which is 3) and sets y to be 99.
+Then when the proc returns, y is printed (which is now 99). So the proc
+is accessing and changing the variable y which is within foo. 
+When you comment out the "y=2" line, you still get the expected output.
+The "bar" proc creates a new variable called y and sets it to 99, but
+this is not in the scope of foo. So when "print y" is called, it cannot
+access the variable and we get an error.
+So nested blocks can access variables within the outer block, but the
+outer blocks cannot access anything that's declared within the inner
+blocks. This is similar to how C/C++/Java handles blocks. The inner
+blocks can modify the outer blocks data, but not the other way around.
+	
+7.
+This is in a way contradictory, but it's not necessarily false. If a
+language isdesigned to be left-associative, then the compilers for that
+language should also e left-associative to avoid any confusion in how to
+write code. However, there's nothing to stop a compiler developer from
+ignoring convention and creating a compiler that is right-associative. It
+would most likely still work, the programmer might just get unexpected
+behavior if they were expecting the compiler to be left-associative.
+	
+8.
+No, since "&" is a unary operator that returns the address of the variable,
+&(&i) would be address of this return value. However, this return value is
+not stored anywhere so you cannot get the memory address of it.
+	
+9.
+Intuitively, since we associate the word "equals" with "=", then both cases
+make sense. If we're assigning the value "3" to "x", we'd say "x equals 3"
+or "x = 3". When we're comparing "3" with "x", we'd say "if x equals 3"
+which also is "if x = 3". So, from an English perspective, both should be
+"=". Meaning we need to use "==" for one, and "=" for the other. And, like
+the designers said, since assignment is more frequent, it makes sense to
+use "=" for the more commonly used operation. Also, in mathematics, we'd use 
+"x = 3" to mean assigning "3" to "x", so it makes sense to continue this
+pattern.
+
+10.
+a.
+int b = (a++ && ++a) > (a++ && a++); |  a=0 b=?
+int b = (0 && ++a) > (a++ && a++);   |  a=1 b=?
+int b = 0 > (a++ && a++);            |  a=1 b=?
+int b = 0 > (1 && a++);              |  a=2 b=?
+int b = 0 > (1 && 2);                |  a=3 b=?
+int b = 0 > 1;                       |  a=3 b=?
+int b = 0;                           |  a=3 b=0
+b.
+int b = (a++ && ++a) > (a++ && a++); |  a=0 b=?
+int b = (a++ && ++a) > (a++ && 0);   |  a=1 b=?
+int b = (a++ && ++a) > 0;            |  a=1 b=?
+int b = (a++ && 2) > 0;              |  a=2 b=?
+int b = (2 && 2) > 0;                |  a=3 b=?
+int b = 1 > 0;                       |  a=3 b=?
+int b = 1;                           |  a=3 b=1
+
+11.
+These loops are not equivalent because the while loop will always
+increment i when checking the condition. However, the for loop
+will only increment once the condition is true. In this example,
+i will be one greater after the while loop exists than after the
+for loop exits.
+
