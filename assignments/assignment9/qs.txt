@@ -1,0 +1,18 @@
+Brian Liebe
+
+5. p 342 (7.4) CYU 28
+    Overloading means the programmer will write a separate subroutine for
+    each type. Generics means the compiler will create a version of the 
+    subroutine to match the type needed. Overloading is referred to as 
+    "ad hoc" polymorphism because of the similarity between the calling
+    syntaxes.
+
+6. p 421 (9.2) CYU 11 
+    Inline subroutines are purely an implementation technique, and does
+    not affect the meaning of the program. Macros are the opposite, and 
+    are semantically preferrable.
+
+7. p 421 (9.2) CYU 12
+   Compilers will expand code in-line if it makes the nested invocations
+   true subroutine call. This will optimize the code by eliminating half
+   the dynamic calls at runtime.
