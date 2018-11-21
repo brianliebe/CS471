@@ -160,8 +160,9 @@ Example:
 
 Problem 7 Answer:
 
-  > replicate' :: (Eq a, Num a) => [a] -> [a]
-
+> replicate' :: (Eq a, Num a) => [a] -> [a]
+> replicate' [] = []
+> replicate' (a:x) = a:a:(replicate' x)
 
 
 Problem 8:
@@ -181,6 +182,13 @@ Example:
 
 Problem 8 Answer:
 
+> ack :: Int -> Int -> Int
+> ack m n = if m == 0
+>           then (n + 1)
+>           else 
+>             if (n == 0 && m > 0) 
+>             then ack (m-1) 1
+>           else ack (m-1) (ack m (n-1))
 
 Problem 9:
 A Define sumHarmonic using a simple recursive style:
@@ -201,7 +209,8 @@ Problem 9 Answer:
 Note: this type is not required; you may have a slightly different type
 depending on your solution.
 
-  > sumH :: (Eq a, Fractional a) => a -> a
+> sumH :: (Eq a, Fractional a) => a -> a
+> sumH n = if (n == 0) then 0 else ((1 / n) + sumH (n-1))
 
 Problem 10: 
 Implement Newton's method for calculating the square root of N.
@@ -229,5 +238,11 @@ Problem 10 Answer:
 Note: again, you may have a slightly different type depending on your
 solution.
 
-   > newtonAppr :: (Fractional a, Ord a) => a -> a -> a -> a
+> newtonAppr :: Double -> Double -> Double -> Double
+> newtonAppr q g t = if withinRange q g t then g
+>                    else newtonAppr q (((q / g) + g) / 2) t
+
+> withinRange :: Double -> Double -> Double -> Bool
+> withinRange q g t = if (abs((sqrt q) - g) <= t) then True else False
+
 
