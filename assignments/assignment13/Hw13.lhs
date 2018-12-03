@@ -1,6 +1,10 @@
 > module Hw13
 >    where
 
+Brian Liebe
+CS471 Assignment 13
+Due: 12/4/18
+
 Rename this file to Hw13.lhs. Your submission to Blackboard should
 be wrapped in a .tar.gz as usual. Place your answers in the indicated
 sections, and please use the function names given (hopefully they're all
@@ -105,7 +109,7 @@ Problem 4 ANSWER:
 
 > thueMap lst = concat (map (\x -> [(mod x 2), (mod (x+1) 2)]) lst)
 
- > thueSeq = [0] : [f | f <- zipWith (:) thueSeq (thue (tail thueSeq))]
+> thueSeq = [0] : [0,1] : [f | f <- zipWith (\x y -> thueMap y) [1..] (tail thueSeq)]
    
 Problem 5:
 Using a fold in your solution:
