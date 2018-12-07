@@ -1,0 +1,37 @@
+Brian Liebe
+CS471 - Assignment 14
+
+Part B:
+  Question 1:
+    1. hLen is not recursive, it doesn't call itself, it's just a lambda function
+    2. Yes, it's an HOF since it takes a function (f) as a parameter
+    3.
+      a. hLen sum [4,5,6] = 12
+      b. hLen head [4,5,6] = 6
+  Question 2:
+    1. hLen myLength [4,5,6] = 3
+  Question 3:
+    1. myLength is the function passed to hLen, so hLen is the HOF and myLength is
+       the function it takes as a parameter.
+
+Part C:
+  Question 1:
+    1. hFact = (\f x -> if (x == 0) then 1 else x * (f (x - 1))) and the type is
+       hFact :: (Integer -> Integer) -> Integer -> Integer
+  Question 2:
+    1. hFact (^ 2) 4 = 36
+  Question 3:
+    1. hFact factorial 5 = 120, and it is the same value as factorial 5
+
+Part D:
+  Question 1:
+    1. factorial' :: Integer -> Integer
+  Question 2:
+    a. fix :: (t -> t) -> t
+    b. In the first example, f is passed the value of 'fix f' after it's evaluated, 
+       and in the second example, f is passed 'fix' which then takes a value of f.
+  Question 3:
+    a. factorial 6 = 720
+    b. hFact factorial 6 = 720
+    c. factorial' 6 = 720
+    d. fix hFact 6 = 720

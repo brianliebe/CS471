@@ -292,8 +292,7 @@ Think about (no need to turn in)
 /* Problem 6 Answer: */
 
 change(0, []).
-change(X, C) :- coin(Name, Amt), X >= Amt, M is floor(X / Amt), 
-                R is X - (M * Amt), change(R, D), C = [(Name,M)|D].
+change(X, C) :- coin(Name, Amt), X >= Amt, M is floor(X / Amt), R is X - (M * Amt), change(R, D), C = [(Name,M)|D].
 
 /* Problem 6 Tests: */
 :- change(168,C), C = [ (dollar, 1), (half, 1), (dime, 1), (nickel, 1), (penny, 3)] .  %SUCCEED
@@ -315,7 +314,9 @@ change(X, C) :- coin(Name, Amt), X >= Amt, M is floor(X / Amt),
 
 /* Problem 7 Answer: */
 
-run(ast(X), Y) :- Y =.. X.
+run(ast(X, Y, Z), L) :- run(Y, A1), run(Z, A2), F =.. [X, A1, A2], L is F.
+run(ast(X, Y), L) :- run(Y, A), F =.. [X, A], L is F.
+run(ast(X), X).
 
 /* Problem 7 Tests: */
 
@@ -336,14 +337,18 @@ run(ast(X), Y) :- Y =.. X.
 
 /* Problem 8 Answer: */
 
+addToList([], X, X).
+addToList([H|T1], Y, [H|T2]) :- addToList(T1, Y, T2).
+binaryAP(ast(X, Y, Z), L) :- binaryAP(Y, A1), binaryAP(Z, A2), addToList(A1, [X|A2], L).
+binaryAP(ast(_, Y), L) :- binaryAP(Y, L).
+binaryAP(ast(_), []).
+
 /* Problem 8 Tests: */
-%:- T = ast(+,ast(*,ast(2),ast(3)),ast(random,ast(5))), binaryAP(T,L), L = [*, +].  %SUCCEED
-%:- T = ast(+, ast(*, ast(2), ast(3)), ast(-,ast(3), ast(5))),  binaryAP(T,L), L = [*, +, -]. %SUCCEED
-%:- T = ast(+, ast(*, ast(2),  ast(-,ast(3), ast(//, ast(2), ast(5)))),ast(9)) ,  binaryAP(T,L), L = [*, -, //, +]. %SUCCEED
+:- T = ast(+,ast(*,ast(2),ast(3)),ast(random,ast(5))), binaryAP(T,L), L = [*, +].  %SUCCEED
+:- T = ast(+, ast(*, ast(2), ast(3)), ast(-,ast(3), ast(5))),  binaryAP(T,L), L = [*, +, -]. %SUCCEED
+:- T = ast(+, ast(*, ast(2),  ast(-,ast(3), ast(//, ast(2), ast(5)))),ast(9)) ,  binaryAP(T,L), L = [*, -, //, +]. %SUCCEED
 
-%:- (T = ast(+,ast(*,ast(2),ast(3)),ast(random,nn(5))), binaryAP(T,L), L = [+,*]) -> fail ; true.      %FAIL
-%
-
+:- (T = ast(+,ast(*,ast(2),ast(3)),ast(random,nn(5))), binaryAP(T,L), L = [+,*]) -> fail ; true.      %FAIL
 
 /* Problem 9:
    Write a predicate numAtoms/2.  numAtoms(+NestedLists, -C) that counts all the atoms in the
@@ -359,14 +364,18 @@ run(ast(X), Y) :- Y =.. X.
 
 /* Problem 9 Answer: */
 
+numAtoms([], 0).
+numAtoms([H|T], Count) :- numAtoms(H, A1), numAtoms(T, A2), Count is A1 + A2.
+numAtoms(X, 1) :- atom(X).
+
 /* Problem 9 Tests: */
-% :- numAtoms([[r,ss,[a,b,c]],[a,b,c],[],[s,t,a,b]],12).
-% :- numAtoms([[r,ss,[a,b,c]],[a,b,c],[],[s,t,a,b]],19) -> fail ; true.
-% :- numAtoms([[r,ss,[a,b,c]],[a,b,c],[],[s,t,a,b]],10) -> fail ; true.
-% :- numAtoms([[r,ss,[a,b,c]],[a,b,c],[],[s,t,[[]],b]],11).
-% :- numAtoms([r], 1).
-% :- numAtoms([r], 3) -> fail ; true.
-% :- numAtoms([[[r]]], 1).
+:- numAtoms([[r,ss,[a,b,c]],[a,b,c],[],[s,t,a,b]],12).
+:- numAtoms([[r,ss,[a,b,c]],[a,b,c],[],[s,t,a,b]],19) -> fail ; true.
+:- numAtoms([[r,ss,[a,b,c]],[a,b,c],[],[s,t,a,b]],10) -> fail ; true.
+:- numAtoms([[r,ss,[a,b,c]],[a,b,c],[],[s,t,[[]],b]],11).
+:- numAtoms([r], 1).
+:- numAtoms([r], 3) -> fail ; true.
+:- numAtoms([[[r]]], 1).
 
 
 
